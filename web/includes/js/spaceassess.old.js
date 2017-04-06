@@ -638,13 +638,7 @@ $(function() {
     // Check for multiCount query string and show input if present
     if (getQueryVariable('multiCount') === 'true') {
         $('input#countInput').show();
-        // UMICH CHANGES
-        $('input#add5').show();
-        $('input#add10').show();
-        $('input#add15').show();
-        // UMICH CHANGES END
     }
-
 
     $("#spaceAssessDialog").dialog({
         bgiframe: true,
@@ -886,28 +880,6 @@ $(function() {
         $("input#countInput").val(1);
         return false;
     });
-
-    // UMICH CHANGES
-
-    $("body").on(buttonEventType, ".addBtn", function() {
-    //$("body").on("click", ".addBtn", function() {
-        // check that we are ready to collect
-        if (!(readyToCollect(true) && startCollecting())) {
-        return false;
-        alert("NOT READY");
-        }
-        // Get current value from input#countInput
-        var current_count = $("input#countInput").val();
-        current_count = parseInt(current_count, 10);
-        if (this.id == "add1") {current_count += 1};
-        if (this.id == "add5") {current_count += 5};
-        if (this.id == "add10") {current_count += 10};
-        if (this.id == "add15") {current_count += 15};
-        $("input#countInput").val(current_count);
-        return false;
-    });
-
-    // UMICH CHANGES END
 
     $("body").on(buttonEventType, "a#goesdown", function() {
         undoCount();
