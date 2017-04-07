@@ -240,7 +240,7 @@ li.loc_item a {
 /* Added or modified elements */
 .addBtn {
     display: inline-block;
-    width: 80px;
+    width: 13%;
     height: 50px;
     margin-left: 15px;
     margin-bottom: 15px;
@@ -249,7 +249,7 @@ li.loc_item a {
 }
 
 #add1 {
-    margin-left: 30px;
+    margin-left: 60px;
 }
 
 .ctrlElem {
@@ -271,7 +271,7 @@ li.loc_item a {
 
 #activityGroupContainer .ui-button-text-only,
 #activityGroupContainer  .ui-button-text {
-    padding: 2px 10px;
+    padding: 2px 7px;
 }
 
 .actGroupLabel {
@@ -281,7 +281,7 @@ li.loc_item a {
 
 #countInput {
     display: block !important;
-    width: 400px !important;
+    width: 15% !important;
     margin-left: auto;
     margin-right: auto;
 }
