@@ -536,7 +536,7 @@ function updateTimer() {
     }
 }
 
-// UMICH CHANGES to undoCount: added code to correctly set $("input#countInput").val(n);
+// UMICH CHANGES to undoCount: added code to correctly set $("input#countInput").val(n); //
 function undoCount() {
     isSessionWiped(function() {
         if (currentlyCollecting && currentSession) {

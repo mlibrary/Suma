@@ -274,6 +274,7 @@ li.loc_item a {
     padding: 2px 5px;
 }
 
+// 12Apr17 - Added this style to add overlapping activities names
 #activityGroupContainer  .ui-button-text {
     max-width: 85% !important;
 }
