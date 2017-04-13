@@ -271,12 +271,12 @@ li.loc_item a {
 
 #activityGroupContainer .ui-button-text-only,
 #activityGroupContainer  .ui-button-text {
-    padding: 2px 5px;
+    padding: 2px 5px !important;
 }
 
-// 12Apr17 - Added this style to add overlapping activities names
-#activityGroupContainer  .ui-button-text {
-    max-width: 85% !important;
+// UMICH CHANGE 13Apr17 Added max-width: 175px;
+.activityContainer{
+    max-width: 175px !important;
 }
 .actGroupLabel {
     font-size: 15px;
