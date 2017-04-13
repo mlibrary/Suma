@@ -536,6 +536,7 @@ function updateTimer() {
     }
 }
 
+// UMICH CHANGES to undoCount: added code to correctly set $("input#countInput").val(n); //
 function undoCount() {
     isSessionWiped(function() {
         if (currentlyCollecting && currentSession) {
@@ -547,9 +548,11 @@ function undoCount() {
                     if (person.count > 0) {
                         countIndicator.val(parseInt(countIndicator.val(), 10) - person.count);
                         currentLocCount.text('(' + countIndicator.val() + ')');
+                        $("input#countInput").val(parseInt(countIndicator.val(), 10) - person.count);
                     } else {
                         countIndicator.val("0");
                         currentLocCount.text("(0)");
+                        $("input#countInput").val(0);
                     }
                     persistence.remove(person);
                     persistence.flush(dbTransaction);
@@ -880,14 +883,14 @@ $(function() {
         return false;
     });
 
+    // UMICH CHANGES
+
     $("body").on(buttonEventType, "input#goesup", function() {
         countPeople(false);
         // Reset input to 1 after tapping count
-        $("input#countInput").val(1);
+        $("input#countInput").val(0); // umich change to from val(1) to val(0)
         return false;
     });
-
-    // UMICH CHANGES
 
     $("body").on(buttonEventType, ".addBtn", function() {
     //$("body").on("click", ".addBtn", function() {
@@ -926,7 +929,7 @@ $(function() {
         var countInput = $("input#countInput");
         // If countInput blank, set to 1
         if (!countInput.val()) {
-            countInput.val(1);
+            countInput.val(0);     // UMICH CHANGE from val(1) to val(0)
         }
     });
 });
