@@ -209,9 +209,10 @@ li.loc_item a {
     margin-left: 5px;
 }
 
-.activityContainer {
+// See UMICH CHANGES BELOW
+/*.activityContainer {
     max-width: 210px;
-}
+}*/
 
 .leftActivities {
     float:left;
@@ -275,9 +276,10 @@ li.loc_item a {
 }
 
 // UMICH CHANGE 13Apr17 Added max-width: 175px;
-.activityContainer{
+.activityContainer {
     max-width: 175px !important;
 }
+
 .actGroupLabel {
     font-size: 15px;
     margin-bottom: 2px;
