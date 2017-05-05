@@ -277,7 +277,7 @@ li.loc_item a {
 
 // UMICH CHANGE 13Apr17 Added max-width: 175px;
 .activityContainer {
-    max-width: 175px !important;
+    max-width: 50% !important;
 }
 
 .actGroupLabel {
