@@ -536,7 +536,6 @@ function updateTimer() {
     }
 }
 
-// UMICH CHANGES to undoCount: added code to correctly set $("input#countInput").val(n); //
 function undoCount() {
     isSessionWiped(function() {
         if (currentlyCollecting && currentSession) {
@@ -548,11 +547,9 @@ function undoCount() {
                     if (person.count > 0) {
                         countIndicator.val(parseInt(countIndicator.val(), 10) - person.count);
                         currentLocCount.text('(' + countIndicator.val() + ')');
-                        $("input#countInput").val(parseInt(countIndicator.val(), 10) - person.count);
                     } else {
                         countIndicator.val("0");
                         currentLocCount.text("(0)");
-                        $("input#countInput").val(0);
                     }
                     persistence.remove(person);
                     persistence.flush(dbTransaction);
@@ -641,13 +638,7 @@ $(function() {
     // Check for multiCount query string and show input if present
     if (getQueryVariable('multiCount') === 'true') {
         $('input#countInput').show();
-        // UMICH CHANGES
-        $('input#add5').show();
-        $('input#add10').show();
-        $('input#add15').show();
-        // UMICH CHANGES END
     }
-
 
     $("#spaceAssessDialog").dialog({
         bgiframe: true,
@@ -883,34 +874,12 @@ $(function() {
         return false;
     });
 
-    // UMICH CHANGES
-
     $("body").on(buttonEventType, "input#goesup", function() {
         countPeople(false);
         // Reset input to 1 after tapping count
-        $("input#countInput").val(0); // umich change to from val(1) to val(0)
+        $("input#countInput").val(1);
         return false;
     });
-
-    $("body").on(buttonEventType, ".addBtn", function() {
-    //$("body").on("click", ".addBtn", function() {
-        // check that we are ready to collect
-        if (!(readyToCollect(true) && startCollecting())) {
-        return false;
-        alert("NOT READY");
-        }
-        // Get current value from input#countInput
-        var current_count = $("input#countInput").val();
-        current_count = parseInt(current_count, 10);
-        if (this.id == "add1") {current_count += 1};
-        if (this.id == "add5") {current_count += 5};
-        if (this.id == "add10") {current_count += 10};
-        if (this.id == "add15") {current_count += 15};
-        $("input#countInput").val(current_count);
-        return false;
-    });
-
-    // UMICH CHANGES END
 
     $("body").on(buttonEventType, "a#goesdown", function() {
         undoCount();
@@ -929,7 +898,7 @@ $(function() {
         var countInput = $("input#countInput");
         // If countInput blank, set to 1
         if (!countInput.val()) {
-            countInput.val(0);     // UMICH CHANGE from val(1) to val(0)
+            countInput.val(1);
         }
     });
 });
