@@ -27,6 +27,11 @@ var countForm = null;
 var countIndicator = null;
 var submitTouchState = [];
 
+// UMICH CHANGES
+var umichGoesupText = 'Tap to add yellow box number to Location Total'
+var umichInstructionsText = 'UMICH instructions here!'
+// END UMICH CHANGES
+
 // This has been converted from a function that serializes all data at once and syncs it to
 // one that just syncs one session at a time. This is a performance optimization.
 // There is still some cruft in here from the old way.
@@ -35,6 +40,8 @@ var submitTouchState = [];
 // write-locking, which would interfere with the destroyAll() calls after the ajax
 // submission.
 function serializeCollectedData(callback) {
+  console.log('In serializeCollectedData')
+
     if (currentlySyncing > 0) {
         return;
     }
@@ -92,7 +99,7 @@ function serializeCollectedData(callback) {
 }
 
 function clearPlaceholderCounts (callback) {
-
+console.log('In clearPlaceholderCounts')
     // setTimeout uses for callbacks in some parts of the code
     // in an attempt to avoid the "Javascript execution exceeded" timeout
     // error on mobile devices
@@ -134,6 +141,8 @@ function clearPlaceholderCounts (callback) {
 }
 
 function checkCompletion(compCounter) {
+  console.log('In checkCompletion')
+
     var completeCount = true;
     $.each(compCounter, function(key, val) {
         if (val !== 0) {
@@ -152,6 +161,7 @@ function showStartDialog() {
 }
 
 function updateInitiatives() {
+  console.log('In updateInitiatives')
     persistence.transaction(function(dbTransaction) {
         Initiative.all().count(dbTransaction, function(initCount) {
             $("option.initOpt", initSelectObj).remove();
@@ -175,11 +185,15 @@ function updateInitiatives() {
 }
 
 function removeActivities() {
+  console.log('In removeActivities')
+
     $("div#activityGroupContainer").empty();
     currentActivities = {};
 }
 
 function displayActivities(actInit, callback) {
+  console.log('In displayActivities')
+
     var countForm, activityContainer;
 
     removeActivities();
@@ -224,6 +238,8 @@ function displayActivities(actInit, callback) {
 }
 
 function removeLocs() {
+  console.log('In removeLocs')
+
     $("ul.loc_list:first").empty().siblings().remove();
     currentLoc = null;
     $("#current_loc_label").text("No current location");
@@ -231,6 +247,8 @@ function removeLocs() {
 }
 
 function displayLocs(parent, callback) {
+  console.log('In displayLocs')
+
     removeLocs();
     $("#loc_header").show();
     var topLocSelector = $("ul.loc_list:first");
@@ -245,6 +263,8 @@ function displayLocs(parent, callback) {
 }
 
 function annotateLoc(locObj) {
+  console.log('In annotateLoc')
+
     if (currentlyCollecting) {
         locObj.people.filter('session', '=', currentSession).count(function(pCount) {
             if (pCount > 0) {
@@ -257,6 +277,8 @@ function annotateLoc(locObj) {
 
 function fetchLocsActivities(init, callback)
 {
+  console.log('In fetchLocsActivities')
+
     var parentLoc, activityGroups = [], locUrl;
     locUrl = initiativeUrl + init['serverId'];
 
@@ -304,6 +326,8 @@ function fetchLocsActivities(init, callback)
 }
 
 function parseLocs(locArray, parent) {
+  console.log('In parseLocs')
+
     $.each(locArray, function(key, val) {
         var newLocObj = new Location({name:val['title'], serverId:val['id']});
         newLocObj.parent = parent;
@@ -316,6 +340,7 @@ function parseLocs(locArray, parent) {
 }
 
 function stopCollecting(sync){
+  console.log('In stopCollecting')
 
     var date = new Date();
 
@@ -332,8 +357,15 @@ function stopCollecting(sync){
             //$("#session_timer").text('00h:00m:00s');
         sessionStart = null;
         currentSession = null;
-        countIndicator.val('Count');
-
+        // UMICH CHANGES
+        if (getQueryVariable('multiCount') === 'true') {
+          countIndicator.val(umichGoesupText);
+        }
+        else
+        {
+          countIndicator.val('Count');
+        }        
+        // END UMICH CHANGE
     } else {
         if (true === sync) {
             closeOldSessions(function() {
@@ -347,6 +379,8 @@ function stopCollecting(sync){
 }
 
 function closeOldSessions(callback) {
+  console.log('In closeOldSessions')
+
     var date = new Date();
     // Close off any old sessions
     Session.all().filter('stopTime', '=', null).list(function(sessions) {
@@ -368,6 +402,8 @@ function closeOldSessions(callback) {
 }
 
 function syncSessions() {
+  console.log('In syncSessions')
+
     // This is a little confusing. currentlySyncing gets incremented in serializeCollectedData
     // but decremented here. This could be better for sure.
     if (0 === currentlySyncing) {
@@ -418,6 +454,8 @@ function syncSessions() {
 }
 
 function readyToCollect(warn) {
+  console.log('In readyToCollect')
+
     var ready = true;
 
     if (!(currentLoc && (initSelectObj.val() !== ''))) {
@@ -440,6 +478,8 @@ function readyToCollect(warn) {
 }
 
 function abandonCollection() {
+  console.log('In abandonCollection')
+
     $("#loadingScreen").dialog('open');
     $.each(currentSessionArr, function(key,session) {
         persistence.remove(session);
@@ -455,6 +495,8 @@ function abandonCollection() {
 }
 
 function hitAbandonButton() {
+  console.log('In hitAbandonButton')
+
     $("#abandonContent").dialog("open");
 }
 
@@ -463,6 +505,8 @@ function hitAbandonButton() {
 // This can happen when Suma is running in multiple windows in the same browser.
 // No data should be lost.
 function isSessionWiped(callback) {
+  console.log('In isSessionWiped')
+
     if (null !== currentSession) {
         Session.findBy('startTime', currentSession.startTime, function(sess) {
             if ((null === sess) || (null !== sess.stopTime)) {
@@ -493,6 +537,8 @@ function isSessionWiped(callback) {
 }
 
 function startCollecting(){
+  console.log('In startCollecting')
+
     if (!currentlyCollecting) {
         if (sessionInit === null) {
             alert("There is an error; please reload this page");
@@ -512,6 +558,8 @@ function startCollecting(){
 }
 
 function updateTimer() {
+  console.log('In updateTimer')
+
     if (currentlyCollecting) {
         var date, timeDiff, hours, minutes, seconds, timeString;
 
@@ -537,6 +585,8 @@ function updateTimer() {
 }
 
 function undoCount() {
+  console.log('In undoCount')
+
     isSessionWiped(function() {
         if (currentlyCollecting && currentSession) {
             persistence.transaction(function(dbTransaction) {
@@ -563,6 +613,8 @@ function undoCount() {
 }
 
 function countPeople(doubleTap) {
+  console.log('In countPeople')
+
     var date = new Date();
 
     if (!(readyToCollect(true) && startCollecting())) {
@@ -604,6 +656,7 @@ function countPeople(doubleTap) {
 }
 
 function initAfterDB() {
+  console.log('In initAfterDB')
 
     initSelectObj.val("");
     updateInitiatives();
@@ -617,6 +670,8 @@ function initAfterDB() {
 
 // Snippet from https://css-tricks.com/snippets/javascript/get-url-variables/
 function getQueryVariable(variable) {
+  console.log('In getQueryVariable')
+
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i=0; i < vars.length; i++) {
@@ -629,6 +684,8 @@ function getQueryVariable(variable) {
 }
 
 $(function() {
+  console.log('In anonymous fuction')
+
     initSelectObj = $("select#init_selector");
     countForm = $("form#count_form");
     countIndicator = $("input#goesup", countForm);
@@ -637,7 +694,15 @@ $(function() {
 
     // Check for multiCount query string and show input if present
     if (getQueryVariable('multiCount') === 'true') {
-        $('input#countInput').show();
+      $('input#countInput').show().css("background-color", "yellow");
+      $('input.umichBtn').show();
+      $('input#goesup').val(umichGoesupText);  
+      $('p.umichInstructions').show().text(umichInstructionsText);
+    } else {
+      $('input#countInput').hide();
+      $('input.umichBtn').hide();
+      $('input#goesup').val('Count');
+      $('p.umichInstructions').hide().text('');
     }
 
     $("#spaceAssessDialog").dialog({
@@ -765,8 +830,15 @@ $(function() {
                                 childSel.append('<li class="loc_item"><a id="loc' + loc.id + '" href="' + loc.id + '">' + loc.name + '    <span class="locCount"></span></a></li>');
                                 annotateLoc(loc);
                             });
-
-                            countIndicator.val('Count');
+                            // UMICH CHANGES
+                            if (getQueryVariable('multiCount') === 'true') {
+                              countIndicator.val(umichGoesupText);
+                            }
+                            else
+                            {
+                              countIndicator.val('Count');
+                            }        
+                            // END UMICH CHANGE
                             $("#loadingScreen").dialog('close');
                         } else {
                             // test for terminal locs--only allow collection if there are no children
@@ -776,6 +848,34 @@ $(function() {
                             // Start a new session as soon as a location is selected
                             startCollecting();
 
+                            // TODO: Handle count rows that represent more than 1 person
+                            // Person.all().filter('session', '=', currentSession).filter('location', '=', currentLoc).count(dbTransaction, function(numCounts) {
+                            //     if (numCounts > 0) {
+                            //         // right now, this subtracts the "zero" placeholder count
+                            //         countIndicator.val(numCounts-1);
+                            //         currentLocCount.text('(' + (numCounts-1) + ')');
+                            //     } else {
+                            //         // Placeholder so that we know that this location has been visited
+                            //         // UMICH CHANGES
+                            //         if (getQueryVariable('multiCount') === 'true') {
+                            //           countIndicator.val(umichGoesupText);
+                            //         }
+                            //         else
+                            //         {
+                            //           countIndicator.val('Count');
+                            //         }        
+                            //         // END UMICH CHANGE                                    
+                            //         var countObj = new Person({timestamp:(new Date()).getTime()});
+                            //         countObj.location = currentLoc;
+                            //         countObj.session = currentSession;
+                            //         countObj.count = 0;
+                            //         persistence.add(countObj);
+                            //         currentLocCount.text('(0)');
+                            //     }
+                            //     persistence.flush(dbTransaction, function() {
+                            //         $("#loadingScreen").dialog('close');
+                            //     });
+                            
                             // Store people associated with this location
                             var currentPeople = Person.all().filter('session', '=', currentSession).filter('location', '=', currentLoc);
 
@@ -794,6 +894,15 @@ $(function() {
                               } else {
                                   // Placeholder so that we know that this location has been visited
                                   countIndicator.val('Count');
+                                  //         // UMICH CHANGES
+                                  //         if (getQueryVariable('multiCount') === 'true') {
+                                  //           countIndicator.val(umichGoesupText);
+                                  //         }
+                                  //         else
+                                  //         {
+                                  //           countIndicator.val('Count');
+                                  //         }        
+                                  //         // END UMICH CHANGE    
                                   var countObj = new Person({timestamp:(new Date()).getTime()});
                                   countObj.location = currentLoc;
                                   countObj.session = currentSession;
@@ -882,6 +991,27 @@ $(function() {
         //displaySessions();
         return false;
     });
+
+    // UMICH CHANGES
+
+    $("body").on(buttonEventType, ".umichBtn", function() {
+    //$("body").on("click", ".addBtn", function() {
+        // check that we are ready to collect
+        if (!(readyToCollect(true) && startCollecting())) {
+        return false;
+        }
+        // Get current value from input#countInput
+        var current_count = $("input#countInput").val();
+        current_count = parseInt(current_count, 10);
+        if (current_count == 1 && this.id != "add1") {current_count = 0}
+        if (this.id == "add1") {current_count += 1};
+        if (this.id == "add5") {current_count += 5};
+        if (this.id == "add10") {current_count += 10};
+        if (this.id == "add15") {current_count += 15};
+        $("input#countInput").val(current_count);
+        return false;
+    });
+    // UMICH CHANGES END
 
     $("body").on(buttonEventType, "input#goesup", function() {
         countPeople(false);
