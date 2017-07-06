@@ -235,11 +235,84 @@ li.loc_item a {
     display: none;
 }
 
+/* UMICH CHANGES */
+
+/* Added or modified elements */
+.addBtn {
+    display: inline-block;
+    width: 13%;
+    height: 50px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    font-size: 1.2em !important;
+}
+
+#add1 {
+    margin-left: 60px;
+}
+
+.ctrlElem {
+    border: 1px solid Darkgray;
+    color: #0000FF;
+    background-color: #D7EBF9;
+}
+
+
+input#goesup {
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+    font-size: 1em;
+    background-color: #D7EBF9;
+    border: solid 1px Darkgray;
+    height: 100px;
+}
+
+/* Height reductions to fit more on iPad screen */
+#current_loc_label {
+    font-size: 17px;
+    min-height: 1.5em;
+}
+
+#activityGroupContainer .ui-button-text-only,
+#activityGroupContainer  .ui-button-text {
+    padding: 2px 5px !important;
+}
+
+// UMICH CHANGE May2017 Added max-width: 50%;
+.activityContainer {
+    max-width: 50% !important;
+}
+
+.actGroupLabel {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+#countInput {
+    width: 70px !important;
+}
+
+form#count_form {
+  border-color: red;
+}
+
+p.umichInstructions {
+  position: relative;
+  color: blue;
+  bottom: -130px;
+  left: 50px;
+}
+/* END UMICH CHANGES */
+
 @media all and (max-width: 480px) {
 /* Rules to begin supporting smaller devices */
-    input#goesup {
-        height: 120px;
-        font-size: 3em;
+    form#count_form input#goesup {
+      -webkit-appearance: none;
+      -moz-appearance:    none;
+      appearance:         none;
+      font-size: 1em;
     }
 
     select#init_selector {
