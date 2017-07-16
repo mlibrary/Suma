@@ -43,7 +43,7 @@ html {
 
 input#goesup {
     width: 90%;
-    height: 320px; 
+    height: 320px;
     font-size: 5em;
 }
 
@@ -240,10 +240,11 @@ li.loc_item a {
 /* Added or modified elements */
 .addBtn {
     display: inline-block;
-    width: 13%;
+    width: 13% !important;
     height: 50px;
     margin-left: 15px;
     margin-bottom: 15px;
+    min-width: 100px;
     border-radius: 2px;
     font-size: 1.2em !important;
 }
@@ -340,8 +341,9 @@ p.umichInstructions {
     }
 
     div.activityContainer {
-        text-align:left;
         float:none;
+        max-width: 50% !important;
+        text-align:left;
     }
 
     #abandon_heading, #goesdown_heading, #save_session_heading {
