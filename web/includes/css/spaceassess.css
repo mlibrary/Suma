@@ -250,7 +250,7 @@ li.loc_item a {
 }
 
 #add1 {
-    margin-left: 60px;
+    margin-left: 10% !important;
 }
 
 .ctrlElem {
