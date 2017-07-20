@@ -276,9 +276,13 @@ input#goesup {
     min-height: 1.5em;
 }
 
+.leftActivities, .rightActivities {
+  max-width: 50%;
+}
+
 #activityGroupContainer .ui-button-text-only,
 #activityGroupContainer  .ui-button-text {
-    padding: 2px 5px !important;
+    padding: 3px 5px !important;
 }
 
 // UMICH CHANGE May2017 Added max-width: 50%;
