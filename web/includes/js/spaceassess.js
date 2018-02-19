@@ -632,9 +632,22 @@ function countPeople(doubleTap) {
         }
 
         var countObj = new Person({timestamp:date.getTime()});
-        $("input.check:checked", countForm).each(function() {
-            countObj.activities.add(currentActivities[$(this).val()]);
-        }).prop("checked", false).button("refresh");
+        // UMICH CHANGE 16FEB2018 - Leave activities checked
+        // until location changes if multiCount is true
+        if (getQueryVariable('multiCount') === 'true') {
+          // $("input.check:checked", countForm).each(function() {
+          //     countObj.activities.add(currentActivities[$(this).val()]);
+          // }).prop("checked", false).button("refresh");
+          $("input.check:checked", countForm).each(function() {
+              countObj.activities.add(currentActivities[$(this).val()]);
+          });
+        } else {
+          $("input.check:checked", countForm).each(function() {
+              countObj.activities.add(currentActivities[$(this).val()]);
+          }).prop("checked", false).button("refresh");
+        }
+        // UMICH CHANGE END 16FEB2018
+
         countObj.location = currentLoc;
         countObj.session = currentSession;
         countObj.count = newCount;
@@ -793,6 +806,15 @@ $(function() {
     $("div#loc_lists").on("click", "li.loc_item a", function() {
         currentLoc = null;
         currentLocCount = null;
+        
+        // UMICH CHANGE 16FEB2018 
+        if (getQueryVariable('multiCount') === 'true') {
+          $("input.check:checked", countForm).each(function() {
+            // Just clear the checked activity items
+          }).prop("checked", false).button("refresh");
+        }
+        // END UMICH CHANGE 16FEB2018
+        
         $("#loadingScreen").dialog('open');
         var currentList = $(this).parent().parent();
         clickEl = this;
