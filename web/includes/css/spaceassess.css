@@ -43,7 +43,7 @@ html {
 
 input#goesup {
     width: 90%;
-    height: 320px;
+    height: 320px; 
     font-size: 5em;
 }
 
@@ -208,6 +208,7 @@ li.loc_item a {
     margin-bottom: 4px;
     margin-left: 5px;
 }
+
 /* UMICH CHANGE */
 .activityContainer {
     /* max-width: 210px; */
@@ -235,6 +236,7 @@ li.loc_item a {
 .retroMode {
     display: none;
 }
+
 
 /* UMICH CHANGES */
 
@@ -313,11 +315,9 @@ p.umichInstructions {
 
 @media all and (max-width: 480px) {
 /* Rules to begin supporting smaller devices */
-    form#count_form input#goesup {
-      -webkit-appearance: none;
-      -moz-appearance:    none;
-      appearance:         none;
-      font-size: 1em;
+    input#goesup {
+        height: 120px;
+        font-size: 3em;
     }
 
     select#init_selector {
